@@ -48,7 +48,7 @@ namespace ExamenP1.Controllers
         // GET: Personas/Create
         public IActionResult Create()
         {
-            ViewData["CarreraId"] = new SelectList(_context.Carrera, "Id", "Campus");
+            ViewData["CarreraId"] = new SelectList(_context.Carrera, "Id", "NombreCarrera");
             return View();
         }
 
@@ -65,7 +65,7 @@ namespace ExamenP1.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CarreraId"] = new SelectList(_context.Carrera, "Id", "Campus", persona.CarreraId);
+            ViewData["CarreraId"] = new SelectList(_context.Carrera, "Id", "NombreCarrera", persona.CarreraId);
             return View(persona);
         }
 
@@ -82,7 +82,7 @@ namespace ExamenP1.Controllers
             {
                 return NotFound();
             }
-            ViewData["CarreraId"] = new SelectList(_context.Carrera, "Id", "Campus", persona.CarreraId);
+            ViewData["CarreraId"] = new SelectList(_context.Carrera, "Id", "NombreCarrera", persona.CarreraId);
             return View(persona);
         }
 
