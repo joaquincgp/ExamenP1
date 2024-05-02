@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace ExamenP1.Models
 {
@@ -6,10 +7,11 @@ namespace ExamenP1.Models
     {
         [Key]
         public int Id { get; set; }
-        [Required]
+        [DisplayName("Carrera")]
         public string NombreCarrera { get; set; }
         [Required]
         public string Campus { get; set; }
+        [DisplayName("Nivel")]
         public int? NumeroSemestres { get; set; }
 
     }
