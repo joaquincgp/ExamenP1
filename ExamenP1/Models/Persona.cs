@@ -7,8 +7,9 @@ namespace ExamenP1.Models
     {
         [Key]
         public int Id { get; set; }
-        [Required]
+        [StringLength(30)]
         public string? Nombre { get; set; }
+        [Range(0, 10)]
         public decimal? Promedio { get; set; }
         public bool? esEcuatoriano { get; set; }
         public DateTime FechaNacimiento { get; set; }
