@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ExamenP1.Migrations
 {
     /// <inheritdoc />
-    public partial class ExamenP1 : Migration
+    public partial class DatabaseJoaquin : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -15,7 +15,8 @@ namespace ExamenP1.Migrations
                 name: "Carrera",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     NombreCarrera = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Campus = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     NumeroSemestres = table.Column<int>(type: "int", nullable: true)
@@ -35,24 +36,22 @@ namespace ExamenP1.Migrations
                     Promedio = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     esEcuatoriano = table.Column<bool>(type: "bit", nullable: true),
                     FechaNacimiento = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CarreraId = table.Column<int>(type: "int", nullable: true),
-                    CarreraId1 = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    CarreraId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Persona", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Persona_Carrera_CarreraId1",
-                        column: x => x.CarreraId1,
+                        name: "FK_Persona_Carrera_CarreraId",
+                        column: x => x.CarreraId,
                         principalTable: "Carrera",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Persona_CarreraId1",
+                name: "IX_Persona_CarreraId",
                 table: "Persona",
-                column: "CarreraId1");
+                column: "CarreraId");
         }
 
         /// <inheritdoc />

@@ -5,7 +5,7 @@ namespace ExamenP1.Models
     public class Carrera
     {
         [Key]
-        public string Id { get; set; }
+        public int Id { get; set; }
         [Required]
         public string NombreCarrera { get; set; }
         [Required]

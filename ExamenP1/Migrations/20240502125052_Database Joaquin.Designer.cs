@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ExamenP1.Migrations
 {
     [DbContext(typeof(ExamenP1Context))]
-    [Migration("20240502123713_ExamenP1")]
-    partial class ExamenP1
+    [Migration("20240502125052_Database Joaquin")]
+    partial class DatabaseJoaquin
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,8 +27,11 @@ namespace ExamenP1.Migrations
 
             modelBuilder.Entity("ExamenP1.Models.Carrera", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Campus")
                         .IsRequired()
@@ -57,10 +60,6 @@ namespace ExamenP1.Migrations
                     b.Property<int?>("CarreraId")
                         .HasColumnType("int");
 
-                    b.Property<string>("CarreraId1")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<DateTime>("FechaNacimiento")
                         .HasColumnType("datetime2");
 
@@ -76,7 +75,7 @@ namespace ExamenP1.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CarreraId1");
+                    b.HasIndex("CarreraId");
 
                     b.ToTable("Persona");
                 });
@@ -85,9 +84,7 @@ namespace ExamenP1.Migrations
                 {
                     b.HasOne("ExamenP1.Models.Carrera", "Carrera")
                         .WithMany()
-                        .HasForeignKey("CarreraId1")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CarreraId");
 
                     b.Navigation("Carrera");
                 });

@@ -26,7 +26,7 @@ namespace ExamenP1.Controllers
         }
 
         // GET: Carrera/Details/5
-        public async Task<IActionResult> Details(string id)
+        public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
             {
@@ -66,7 +66,7 @@ namespace ExamenP1.Controllers
         }
 
         // GET: Carrera/Edit/5
-        public async Task<IActionResult> Edit(string id)
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
@@ -86,7 +86,7 @@ namespace ExamenP1.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("Id,NombreCarrera,Campus,NumeroSemestres")] Carrera carrera)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,NombreCarrera,Campus,NumeroSemestres")] Carrera carrera)
         {
             if (id != carrera.Id)
             {
@@ -117,7 +117,7 @@ namespace ExamenP1.Controllers
         }
 
         // GET: Carrera/Delete/5
-        public async Task<IActionResult> Delete(string id)
+        public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
             {
@@ -137,7 +137,7 @@ namespace ExamenP1.Controllers
         // POST: Carrera/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(string id)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var carrera = await _context.Carrera.FindAsync(id);
             if (carrera != null)
@@ -149,7 +149,7 @@ namespace ExamenP1.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool CarreraExists(string id)
+        private bool CarreraExists(int id)
         {
             return _context.Carrera.Any(e => e.Id == id);
         }

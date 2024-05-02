@@ -10,22 +10,23 @@ using ExamenP1.Models;
 
 namespace ExamenP1.Controllers
 {
-    public class PersonaController : Controller
+    public class PersonasController : Controller
     {
         private readonly ExamenP1Context _context;
 
-        public PersonaController(ExamenP1Context context)
+        public PersonasController(ExamenP1Context context)
         {
             _context = context;
         }
 
-        // GET: Persona
+        // GET: Personas
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Persona.ToListAsync());
+            var examenP1Context = _context.Persona.Include(p => p.Carrera);
+            return View(await examenP1Context.ToListAsync());
         }
 
-        // GET: Persona/Details/5
+        // GET: Personas/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -34,6 +35,7 @@ namespace ExamenP1.Controllers
             }
 
             var persona = await _context.Persona
+                .Include(p => p.Carrera)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (persona == null)
             {
@@ -43,18 +45,19 @@ namespace ExamenP1.Controllers
             return View(persona);
         }
 
-        // GET: Persona/Create
+        // GET: Personas/Create
         public IActionResult Create()
         {
+            ViewData["CarreraId"] = new SelectList(_context.Carrera, "Id", "Campus");
             return View();
         }
 
-        // POST: Persona/Create
+        // POST: Personas/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Nombre,Promedio,esEcuatoriano,FechaNacimiento")] Persona persona)
+        public async Task<IActionResult> Create([Bind("Id,Nombre,Promedio,esEcuatoriano,FechaNacimiento,CarreraId")] Persona persona)
         {
             if (ModelState.IsValid)
             {
@@ -62,10 +65,11 @@ namespace ExamenP1.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["CarreraId"] = new SelectList(_context.Carrera, "Id", "Campus", persona.CarreraId);
             return View(persona);
         }
 
-        // GET: Persona/Edit/5
+        // GET: Personas/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -78,15 +82,16 @@ namespace ExamenP1.Controllers
             {
                 return NotFound();
             }
+            ViewData["CarreraId"] = new SelectList(_context.Carrera, "Id", "Campus", persona.CarreraId);
             return View(persona);
         }
 
-        // POST: Persona/Edit/5
+        // POST: Personas/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Nombre,Promedio,esEcuatoriano,FechaNacimiento")] Persona persona)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Nombre,Promedio,esEcuatoriano,FechaNacimiento,CarreraId")] Persona persona)
         {
             if (id != persona.Id)
             {
@@ -113,10 +118,11 @@ namespace ExamenP1.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["CarreraId"] = new SelectList(_context.Carrera, "Id", "Campus", persona.CarreraId);
             return View(persona);
         }
 
-        // GET: Persona/Delete/5
+        // GET: Personas/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -125,6 +131,7 @@ namespace ExamenP1.Controllers
             }
 
             var persona = await _context.Persona
+                .Include(p => p.Carrera)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (persona == null)
             {
@@ -134,7 +141,7 @@ namespace ExamenP1.Controllers
             return View(persona);
         }
 
-        // POST: Persona/Delete/5
+        // POST: Personas/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

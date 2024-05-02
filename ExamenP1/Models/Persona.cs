@@ -14,7 +14,7 @@ namespace ExamenP1.Models
         public DateTime FechaNacimiento { get; set; }
         [ForeignKey ("CarreraId")]
         public int? CarreraId { get; set; }
-        public Carrera Carrera { get; set; }
+        public Carrera? Carrera { get; set; }
 
     }
 }
